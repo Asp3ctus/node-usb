@@ -7,12 +7,28 @@
     {
       "target_name": "action_after_build",
       "type": "none",
-      "dependencies": [ "<(module_name)" ],
-      "copies": [
-        {
-          "files": [ "<(PRODUCT_DIR)/<(module_name).node" ],
-          "destination": "<(module_path)"
-        }
+      "dependencies": [ "usb_bindings" ],
+    "conditions": [
+        ['OS=="win"', {
+              "copies":[
+                  {
+                      "files":[
+                          "<(PRODUCT_DIR)/usb_bindings.node"
+                      ],
+                      "destination":"./prebuild/<(OS)/<(target_arch)/<!(echo %TYPE%)/<(target)/"
+                  }
+              ]
+        }],
+        ['OS!="win"', {
+              "copies":[
+                  {
+                      "files":[
+                          "<(PRODUCT_DIR)/usb_bindings.node"
+                      ],
+                      "destination":"./prebuild/<(OS)/<(target_arch)/<!(echo $TYPE)/<(target)/"
+                  }
+              ]
+        }]
       ]
     },
     {

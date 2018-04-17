@@ -1,8 +1,14 @@
-var binary = require('node-pre-gyp');
-var path = require('path');
-var binding_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
-
-var usb = exports = module.exports = require(binding_path);
+let usb = exports = module.exports;
+const os = require('os');
+const {node, nw} = process.versions;
+switch (os.type()) {
+    case 'Linux':
+        usb = require(`./prebuild/linux/${os.arch()}/${nw ? 'nw' : 'node'}/${nw || node}/usb_bindings`);
+        break;
+    default:
+        throw new Error('Not supported OS');
+}
+module.exports = usb;
 var events = require('events')
 var util = require('util')
 
