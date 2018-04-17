@@ -5,6 +5,9 @@ switch (os.type()) {
     case 'Linux':
         usb = require(`./prebuild/linux/${os.arch()}/${nw ? 'nw' : 'node'}/${nw || node}/usb_bindings`);
         break;
+	case 'Windows_NT':
+		_export = require(`./prebuild/win/${os.arch()}/${nw ? 'nw' : 'node'}/${nw || node}/usb_bindings`);
+		break;
     default:
         throw new Error('Not supported OS');
 }
